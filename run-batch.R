@@ -266,6 +266,11 @@ res = map(strsplit(samples, ',')[[1]], function(sample) {
   )
 })
 
+map_dfr(res, \(x) mutate(x[['raw_data']],
+                         sample_file = x[['sample_file']],
+                         .before = 1)) %>%
+  write_tsv('raw_edits.tsv')
+
 map_dfr(res, \(x) mutate(x[['editing_table']],
                          sample_file = x[['sample_file']],
                          .before = 1)) %>%
